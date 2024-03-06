@@ -1,0 +1,3 @@
+const base_token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWF0IjoxNjUxNDA2ODM2LCJleHAiOjI2NTE0MDY4MzV9.YrWarwtB8cJFCgnBe4gmapRK7EbseedGokA6pvDk0eY'
+
+export default base_token
