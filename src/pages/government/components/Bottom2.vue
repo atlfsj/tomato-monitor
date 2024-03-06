@@ -5,7 +5,7 @@
  * @LastEditors: jyq
  * @LastEditTime: 2022-01-08 16:31:56
 -->
-<template>
+<!--<template>
   <div ref= "bottom2_container" style="height:95%">
 
   </div>
@@ -63,4 +63,72 @@ export default {
 }
 </script>
 <style scoped>
+</style>-->
+<template>
+  <div>
+    <div ref="chartContainer" style="width: 100%;"></div>
+  </div>
+</template>
+
+<script>
+import { Chart } from '@antv/g2';
+
+export default {
+  data() {
+    return {
+      chart: null,
+      data: this.generateRandomData(),
+    };
+  },
+  mounted() {
+    this.initChart();
+    this.startRandomJump();
+  },
+  methods: {
+    initChart() {
+      const chartContainer = this.$refs.chartContainer;
+
+      this.chart = new Chart({
+        container: chartContainer,
+        autoFit: true,
+        height: 165, // 设置图表高度
+      });
+
+      // 修改为柱状图配置
+      this.chart.interval().position('label*value').color('type');
+      
+      // 设置纵轴范围
+      this.chart.scale({
+        value: {
+          min: 0,
+          max: 1,
+        },
+      });
+
+      this.chart.render();
+    },
+    generateRandomData() {
+      const labels = ['03-1', '03-2', '03-3', '03-4', '03-5'];
+      const types = ['患病', '未患病'];
+
+      return labels.map(label => {
+        return types.map(type => ({
+          label,
+          type,
+          value: Math.random()  ,
+        }));
+      }).flat();
+    },
+    startRandomJump() {
+      setInterval(() => {
+        this.data = this.generateRandomData();
+        this.chart.changeData(this.data);
+      }, 2000); // 调整更新的间隔
+    },
+  },
+};
+</script>
+
+<style scoped>
+/* Add your component-specific styles here */
 </style>

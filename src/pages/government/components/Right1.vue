@@ -5,7 +5,7 @@
  * @LastEditors: 高鸿宇 10395429+gao-hong-yu@user.noreply.gitee.com
  * @LastEditTime: 2023-01-19 12:08:18
 -->
-<template>
+<!--<template>
   <div ref="rightcontainer" style="height: 95%">
 
   </div>
@@ -86,4 +86,74 @@ export default {
     }
   }
 }
+</script>-->
+
+<template>
+  <div>
+    <div ref="chartContainer" style="width: 100%;"></div>
+  </div>
+</template>
+
+<script>
+import { Chart } from '@antv/g2';
+
+export default {
+  data() {
+    return {
+      chart: null,
+      data: this.generateRandomData(),
+    };
+  },
+  mounted() {
+    this.initChart();
+    this.startRandomJump();
+  },
+  methods: {
+    initChart() {
+      const chartContainer = this.$refs.chartContainer;
+
+      this.chart = new Chart({
+        container: chartContainer,
+        autoFit: true,
+        height: 165,// 设置图表宽度
+      });
+
+      this.chart.data(this.data);
+      this.chart
+        .line()
+        .position('label*value')
+        .color('type')
+        .shape('smooth');
+      this.chart.scale({
+        value: {
+          min: 0, // 设置最小值
+          max: 35, // 设置最大值
+        },
+      });
+      this.chart.render();
+    },
+    generateRandomData() {
+      const labels = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',];
+      const types = ['毛毛虫', '臭虫'];
+      
+      return labels.map(label => {
+        return types.map(type => ({
+          label,
+          type,
+          value: Math.floor(Math.random() * 30) +1,
+        }));
+      }).flat();
+    },
+    startRandomJump() {
+      setInterval(() => {
+        this.data = this.generateRandomData();
+        this.chart.changeData(this.data);
+      }, 2000); // Adjust the interval as needed
+    },
+  },
+};
 </script>
+
+<style scoped>
+/* Add your component-specific styles here */
+</style>
