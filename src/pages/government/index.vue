@@ -17,40 +17,40 @@
                 <!--<Left1/>-->
                 <div class="scroll">
                   <a-button class="news" title="把农业建成现代化大产业" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613224.htm">
-                            把农业建成现代化大产业
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613224.htm">
+                    把农业建成现代化大产业
                   </a-button>
                   <a-button class="news" title="全国供销合作社系统做好春耕农资供应" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613199.htm">
-                            全国供销合作社系统做好春耕农资供应
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613199.htm">
+                    全国供销合作社系统做好春耕农资供应
                   </a-button>
                   <a-button class="news" title="把好事实事办到农民心坎上" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613195.htm">
-                            把好事实事办到农民心坎上
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613195.htm">
+                    把好事实事办到农民心坎上
                   </a-button>
                   <a-button class="news" title="中国--中东欧国家农业合作成果如何？" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613163.htm">
-                            中国--中东欧国家农业合作成果如何？
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613163.htm">
+                    中国--中东欧国家农业合作成果如何？
                   </a-button>
                   <a-button class="news" title="第三期援厄农业专家组归国汇报" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
-                            第三期援厄农业专家组归国汇报
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
+                    第三期援厄农业专家组归国汇报
                   </a-button>
                   <a-button class="news" title="第三期援厄农业专家组归国汇报" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
-                            第三期援厄农业专家组归国汇报
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
+                    第三期援厄农业专家组归国汇报
                   </a-button>
                   <a-button class="news" title="第三期援厄农业专家组归国汇报" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
-                            第三期援厄农业专家组归国汇报
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
+                    第三期援厄农业专家组归国汇报
                   </a-button>
                   <a-button class="news" title="第三期援厄农业专家组归国汇报" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
-                            第三期援厄农业专家组归国汇报
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
+                    第三期援厄农业专家组归国汇报
                   </a-button>
                   <a-button class="news" title="第三期援厄农业专家组归国汇报" type="link" target="_blank"
-                            href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
-                            第三期援厄农业专家组归国汇报
+                    href="http://www.agri.cn/zx/nyyw/202403/t20240305_8613160.htm">
+                    第三期援厄农业专家组归国汇报
                   </a-button>
                 </div>
               </template>
@@ -92,14 +92,14 @@
           <div class="content_one_right_1 chart_box">
             <Box title="实时病虫害数据曲线">
               <template v-slot:content>
-                <Right1/>
+                <Right1 />
               </template>
             </Box>
           </div>
           <div class="content_one_right_2 chart_box">
             <Box title="专家推荐配药方案">
               <template v-slot:content>
-                <Right2/>
+                <Right2 />
 
               </template>
             </Box>
@@ -116,40 +116,40 @@
               <!--<workorder/>-->
               <div class="scroll">
                 <a-button class="news" title="果树茶叶应对持续雨雪天气及灾后管理指导意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
+                  href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
                   果树茶叶应对持续雨雪天气及灾后管理指导意见
                 </a-button>
                 <a-button class="news" title="蔬菜应对持雨雪冰冻天气指导意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240201_8606228.htm">
+                  href="http://www.agri.cn/sc/nszd/202402/t20240201_8606228.htm">
                   蔬菜应对持雨雪冰冻天气指导意见
                 </a-button>
                 <a-button class="news" title="2024年冬油菜春季田间管理指导意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240201_8606060.htm">
+                  href="http://www.agri.cn/sc/nszd/202402/t20240201_8606060.htm">
                   2024年冬油菜春季田间管理指导意见
                 </a-button>
                 <a-button class="news" title="2024年全国冬小麦春季田间管理指导意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240201_8605937.htm">
+                  href="http://www.agri.cn/sc/nszd/202402/t20240201_8605937.htm">
                   2024年全国冬小麦春季田间管理指导意见
                 </a-button>
                 <a-button class="news" title="柑橘防范应对低温冻害技术指导意见" type="link" target="_blank"
-                          href="http://www.agri.cn/zx/zxfb/202312/t20231223_8423091.htm">
+                  href="http://www.agri.cn/zx/zxfb/202312/t20231223_8423091.htm">
                   柑橘防范应对低温冻害技术指导意见
                 </a-button>
                 <a-button class="news" title="小麦防倒伏防早衰夺丰收技术意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
-                          果树茶叶应对持续雨雪天气及灾后管理指导意见
+                  href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
+                  果树茶叶应对持续雨雪天气及灾后管理指导意见
                 </a-button>
                 <a-button class="news" title="小麦防倒伏防早衰夺丰收技术意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
-                          果树茶叶应对持续雨雪天气及灾后管理指导意见
+                  href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
+                  果树茶叶应对持续雨雪天气及灾后管理指导意见
                 </a-button>
                 <a-button class="news" title="小麦防倒伏防早衰夺丰收技术意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
-                          果树茶叶应对持续雨雪天气及灾后管理指导意见
+                  href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
+                  果树茶叶应对持续雨雪天气及灾后管理指导意见
                 </a-button>
                 <a-button class="news" title="小麦防倒伏防早衰夺丰收技术意见" type="link" target="_blank"
-                          href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
-                          果树茶叶应对持续雨雪天气及灾后管理指导意见
+                  href="http://www.agri.cn/sc/nszd/202402/t20240206_8607939.htm">
+                  果树茶叶应对持续雨雪天气及灾后管理指导意见
                 </a-button>
               </div>
             </template>
@@ -158,7 +158,7 @@
         <div class="content_tow_2 chart_box">
           <Box title="患病比例">
             <template v-slot:content>
-              <Bottom2/>
+              <Bottom2 />
             </template>
           </Box>
         </div>
@@ -173,7 +173,7 @@
         <div class="content_tow_4 chart_box">
           <Box title="监测视频">
             <template v-slot:content>
-              <Bottom4/>
+              <Bottom4 />
 
             </template>
           </Box>
@@ -182,7 +182,14 @@
       <!-- /第二行 -->
     </div>
 
-    <!-- /内容 -->
+    <!-- 病虫害识别 -->
+    <template v-if="showFind">
+      <h1>show了看看我</h1>
+      <iframe>
+        <find />
+      </iframe>
+    </template>
+
   </div>
 </template>
 <script>
@@ -200,6 +207,7 @@ import Bottom4 from './components/Bottom4'
 import Bottom3 from "./components/Bottom3";
 import Middle from "@/pages/government/components/Middle";
 import Vedio from './components/Vedio.vue'
+import Find from '../m3/Find'
 
 export default {
   components: {
@@ -221,7 +229,26 @@ export default {
   setup() {
     document.title = '番茄病虫害监测系统'
   },
+  /*
+  data: {
+    return() {
+      showFind: false
+    }
+  },
+  porps() {
+    return {
+      value: this.showFind
+    }
+  },
+  created() {
+    Bus.$on('toggleFind', () => {
+      this.showFind = !this.showFind
+    })
+  }*/
 }
+
+
+
 </script>
 
 <style lang="scss" scoped>
@@ -250,7 +277,8 @@ export default {
 
   .scroll::-webkit-scrollbar {
     /*滚动条整体样式*/
-    width: 10px; /*高宽分别对应横竖滚动条的尺寸*/
+    width: 10px;
+    /*高宽分别对应横竖滚动条的尺寸*/
     height: 1px;
   }
 
@@ -309,7 +337,7 @@ export default {
         display: flex;
         flex-direction: column;
 
-        & > div {
+        &>div {
           flex: 1;
         }
       }
@@ -319,7 +347,7 @@ export default {
         display: flex;
         flex-direction: column;
 
-        & > div {
+        &>div {
           background: url('../../assets/layout/chart_center_box_bg.png');
           background-size: 100% 100%;
           flex: 1;
@@ -339,7 +367,7 @@ export default {
       display: flex;
       flex-direction: row;
 
-      & > div {
+      &>div {
         flex: 1;
       }
     }

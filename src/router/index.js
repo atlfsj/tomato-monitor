@@ -6,12 +6,12 @@
  * @LastEditTime: 2023-01-23 08:49:32
  * 
  */
-import {createRouter, createWebHashHistory} from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
     {
         path: '/',
-        redirect: '/government'   
+        redirect: '/government'
     },
     {
         path: '/government',
@@ -19,27 +19,17 @@ const routes = [
         component: () => import('../pages/government')
     },
     {
-        path: '/m1',
-        name: 'M1',
-        component: () => import('../pages/m1')
-    },
-    {
-        path: '/m2',
-        name: 'M2',
-        component: () => import('../pages/m2')
-    },
-    {
-       path: '/show',
-       name: 'show',
-     component: () => import('../pages/m3/show.vue') 
-   },
-   {
-path:'/find',
-name:'find',
-component:()=>import('../pages/m3/find.vue')
+        path: '/find',
+        name: 'Find',
+        component: () => import('../pages/m3/Find.vue')
 
-   }
-   
+    },
+    {
+        path: '/show',
+        name: 'Show',
+        component: () => import('../pages/m3/Show.vue')
+    }
+
 ]
 
 const router = createRouter({

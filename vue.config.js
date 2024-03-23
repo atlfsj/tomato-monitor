@@ -5,8 +5,10 @@ module.exports = {
                 target: 'http://localhost:3000', // 后端服务地址
                 changeOrigin: true,
             }
-        }
-    }
+        },
+
+    },
+    lintOnSave: false, // eslint-loader 是否在保存的时候检查
 }
 /*
 const path = require('path');
