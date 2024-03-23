@@ -1,158 +1,162 @@
 <template>
-    <div class="upload-iden">
-    <div class="upload-file">
-   <a-upload-dragger
-     v-model:fileList="fileList"
-    name="file"
-   :customRequest="toUpload">
-       
-   <p class="ant-upload-drag-icon">
-   <inbox-outlined></inbox-outlined>
-    </p>
-      <p class="ant-upload-text">请将作物图片上传到此处</p>
-     <p class="ant-upload-hint">
-        支持点击选择文件上传与拖拽文件至此处上传
-      </p>
-     </a-upload-dragger>
-   </div>
-  
-    <div class="upload-img">
-    <img
-       :src="imageBase64"
-    />
-   <a-input addon-before="虫害名称" v-model:value="resultName" disabled/>
-   <a-input addon-before="中文翻译" v-model:value="resultChineseName" disabled/>
-      <a-input addon-before="相似概率" v-model:value="resultScore" disabled/>
-  </div> 
-    </div> 
+  <div class="find">
+    <div v-if="!fileList.length" class="full-width">
+      <a-upload-dragger :file-list="fileList" :custom-request="customRequest" :before-upload="beforeUpload"
+        :show-upload-list="false" class="full-height">
+        <!-- 如果文件列表为空，显示拖拽上传区域 -->
+        <div class="upload-container">
+          <!-- 拖拽上传区域的图标 -->
+          <p class="ant-upload-drag-icon">
+            <a-icon type="inbox" />
+          </p>
+          <!-- 拖拽上传区域的提示文本 -->
+          <p class="ant-upload-text">点击或拖拽上传图片</p>
+        </div>
+      </a-upload-dragger>
+    </div>
 
-  
-  </template>
-  <script>
-  import {InboxOutlined} from '@ant-design/icons-vue';
-  import {defineComponent} from 'vue';
-  import axios from "axios";
-  
-  export default defineComponent({
-    components: {
-      InboxOutlined,
-    },
-  
-    data() {
-      return {
-        resultName: '',
-        resultChineseName: '晚疫病',
-        resultScore: '',
-        fileList: [],
-        access_token: '',
-        imageBase64: '',
-      // images: [
-  //'https://img-qn.51miz.com/preview/photo/00/01/51/47/P-1514717-13256105.jpg!/quality/90/unsharp/true/compress/true/fwfh/640x420'
-    //     ,
-     //     'https://img-qn.51miz.com/preview/photo/00/01/51/41/P-1514113-29810DBD.jpg!/quality/90/unsharp/true/compress/true/fwfh/640x420'
-    //     ,
-  //'https://img-qn.51miz.com/preview/photo/00/01/51/25/P-1512599-CF19391A.jpg!/quality/90/unsharp/true/compress/true/fwfh/640x420'
-    //     ,
-  //'https://img-qn.51miz.com/preview/photo/00/01/51/47/P-1514788-0DF4C2C8.jpg!/quality/90/unsharp/true/compress/true/fwfh/640x420'
-//]
+    <div v-else class="half-width">
+      <!-- 如果文件列表不为空，显示已上传的图片 -->
+      <img class="uploaded-image" :src="fileList[0].url" alt="Uploaded" @click="getResultGroups" />
+      <!-- 识别结果展示区域 -->
+      <div class="result-show">
+        <div v-for="(group, groupIndex) in resultGroups" :key="groupIndex">
+          <div v-for="(result, resultIndex) in group" :key="resultIndex">
+            <a-input :addon-before="result.label" v-model:value="result.value" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+import { message } from 'ant-design-vue';
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      fileList: [],
+      resultGroups: [] // 确保定义 resultGroups
+    };
+  },
+
+  methods: {
+    // 在上传前进行文件类型检查
+    beforeUpload(file) {
+      const isImage = file.type.startsWith('image/');
+      // 如果不是图片类型，显示错误提示
+      if (!isImage) {
+        message.error('You can only upload image files!');
       }
+      // 返回检查结果，允许上传图片则返回 true，否则返回 false
+      return isImage;
     },
-    setup() {
-    // const handleChange = info => {
-     // const status = info.file.status;
-     
-     // if (status !== 'uploading') {
-      //   console.log(info.file, info.fileList);
-      //  }
-    
-     //if (status === 'done') {
-        // message.success(`${info.file.name} file uploaded successfully.`);
-     // } else if (status === 'error') {
-       // message.error(`${info.file.name} file upload failed.`);
-     //  }
-     //};
-    
-      //return {
-    //handleChange,
-     // fileList: ref([]),
-     //};
+    // 模拟文件上传过程，并更新文件列表
+    customRequest({ file, onSuccess }) {
+      // 模拟文件上传的延时操作
+      setTimeout(() => {
+        // 上传成功的回调函数
+        onSuccess();
+
+        // 假设服务器返回的数据包含图片地址
+        const imageUrl = URL.createObjectURL(file);
+
+        // 更新文件列表，添加上传成功的文件信息
+        this.fileList = [{
+          uid: file.uid,
+          name: file.name,
+          status: 'done',
+          url: imageUrl
+        }];
+        console.log(this.fileList[0].url);
+        this.getResultGroups();
+      }, 1000);
     },
-    mounted() {
-      this.getAccessToken()
-    },
-    methods: {
-      initBaiDuApi() {
-        const service = axios.create({
-          timeout: 3000
+    getResultGroups() {
+      const blobUrl = this.fileList[0].url
+      axios.post('http://localhost:3000/blob', {
+        url: blobUrl
+      }).then(() => {
+        alert('上传成功')
+        console.log(blobUrl)
+      }).catch(() => {
+        alert('上传失败')
+      }).then(() => {
+        axios.get('http://localhost:3000/result', {
+
+        }).then(response => {
+          this.resultGroups = response.data
+        }).catch(() => {
+          alert('识别失败')
         })
-        return service
-      },
-      getAccessToken() {
-        const that = this
-        const service = that.initBaiDuApi()
-        service.get('/baidu/oauth/2.0/token?grant_type=client_credentials&client_id=xsxLag513Ry9nhoa900IDQac&client_secret=BXkbiRbNCXyj2ZamEITZ0P5RmPcqT6SW')
-            .then(res => {
-              that.access_token = res.data.access_token
-            })
-      },
-      toUpload(data) {
-        const that = this
-        const file = data.file
-        const base64 = new Promise(resolve => {
-          const fileReader = new FileReader();
-          fileReader.readAsDataURL(file);
-          fileReader.onload = () => {
-            resolve(fileReader.result);
-            // this.formImg = fileReader.result;
-          }
-        }).then(function (res) {
-          that.imageBase64 = res
-          const imageBase64 = res.replace(/^data:image\/\w+;base64,/, "")
-          const service = that.initBaiDuApi()
-          service.post('/baidu/rpc/2.0/ai_custom/v1/classification/sxau20?access_token=' + that.access_token, {
-            'image': imageBase64
-          }).then(res => {
-            that.resultName = res.data.results[0].name
-            that.resultScore = (Math.round(res.data.results[0].score * 10000)) / 100 + '%'
-          })
-        });
-      }
-    }
-  });
-  </script>
-  
-  <style scoped>
-  .upload-iden {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: nowrap;
-  
-  }
-  
-  .upload-file {
-    width: 50%;
-  }
-  
-  .upload-img {
-    width: 50%;
-  
-  
-  }
-  
-  .upload-img img {
-    width: 100%;
-    height: 86%;
-  }
-  
-  .carousel-middle {
-    width: 100%;
-  }
-  
-  .carousel-middle img {
-    width: 700px;
-    height: 420px;
-  }
-  </style>
-  
+      })
+
+      /*axios.get('http://localhost:3000/result')
+        .then(response => {
+          // Assuming the resultGroups data is returned in the response
+          this.resultGroups = response.data;
+        })
+        .catch(error => {
+          console.error('Failed to fetch resultGroups:', error);
+          alert('获取数据失败');
+        });*/
+    },
+  },
+};
+</script>
+
+<style scoped>
+.find {
+  background-color: aliceblue;
+  width: 100%;
+  height: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.half-width {
+  display: flex;
+  width: 100%;
+}
+
+.full-height {
+  height: 100%;
+}
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.ant-upload-text {
+  margin-top: 10px;
+  color: #666;
+}
+
+.uploaded-image {
+  max-width: 50%;
+  max-height: 100%;
+}
+
+.result-show {
+  max-width: 50%;
+  height: 100%;
+  overflow-y: auto;
+  /* 添加滚动条，以防结果过多溢出 */
+}
+
+.result-show::-webkit-scrollbar {
+  width: 5px;
+}
+
+.result-show::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+}
+</style>

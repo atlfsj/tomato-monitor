@@ -1,10 +1,14 @@
+module.exports = {
+    devServer: {
+        proxy: {
+            '/result': {
+                target: 'http://localhost:3000', // 后端服务地址
+                changeOrigin: true,
+            }
+        }
+    }
+}
 /*
- * @Description:
- * @Author: charles
- * @Date: 2021-05-05 18:24:58
- * @LastEditors: charles
- * @LastEditTime: 2021-12-22 17:04:37
- */
 const path = require('path');
 
 function resolve(dir) {
@@ -12,6 +16,7 @@ function resolve(dir) {
 }
 
 module.exports = {
+    /*
     publicPath: './',
     devServer: {
         proxy: {
@@ -48,4 +53,13 @@ module.exports = {
             }
         }
     },
+    devServer: {
+        proxy: {
+            '/result': {
+                target: 'http://localhost:3000', // 后端服务地址
+                changeOrigin: true,
+            }
+        }
+    }
 }
+*/

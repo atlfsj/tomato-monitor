@@ -4,11 +4,12 @@
  * @LastEditTime: 2023-01-23 09:11:07
  * @LastEditors: 高鸿宇 10395429+gao-hong-yu@user.noreply.gitee.com
  * @Description:
- */  
+ */
+/*
 import axios from 'axios'
 // create an axios instance
 const service = axios.create({
-    baseURL: "http://127.0.0.1:7001", // url = base url + request url
+    baseURL: "http://127.0.0.0:3000", // url = base url + request url
     timeout: 10000 // request timeout
 })
 
@@ -45,4 +46,4 @@ export function get(url, params) {
     })
 }
 
-export default service
+export default service*/
