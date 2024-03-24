@@ -75,28 +75,28 @@ export default {
     },
     getResultGroups() {
       const blobUrl = this.fileList[0].url;
-/*axios.post('http://192.168.139.20:5000', blobUrl)
-  .then(() => {
-    // 如果上传成功，显示上传成功的提示
-    alert('上传成功');
-    console.log(blobUrl); // 输出blobUrl到控制台
+      axios.post('http://192.168.139.20:5000', blobUrl)
+        .then(() => {
+          // 如果上传成功，显示上传成功的提示
+          alert('上传成功');
+          console.log(blobUrl); // 输出blobUrl到控制台
 
-    // 在上传成功后再获取结果
-    axios.get('http://192.168.139.20:5000')
-      .then(response => {
-        // 处理获取结果的响应
-        //this.resultGroups = response.data;
-        console.log('请求成功');
-      }).catch(() => {
-        alert('识别失败');
-      });
-  })
-  .catch(() => {
-    // 如果上传失败，显示上传失败的提示
-    alert('上传失败');
-  });
-},
-},
+          // 在上传成功后再获取结果
+          axios.get('http://192.168.139.20:5000')
+            .then(response => {
+              // 处理获取结果的响应
+              //this.resultGroups = response.data;
+              console.log('请求成功');
+            }).catch(() => {
+              alert('识别失败');
+            });
+        })
+        .catch(() => {
+          // 如果上传失败，显示上传失败的提示
+          alert('上传失败');
+        });
+    },
+  },
 };
 </script>
 

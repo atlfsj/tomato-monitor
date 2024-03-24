@@ -96,7 +96,7 @@ export default {
 
       // 修改为柱状图配置
       this.chart.interval().position('label*value').color('type');
-      
+
       // 设置纵轴范围
       this.chart.scale({
         value: {
@@ -108,22 +108,39 @@ export default {
       this.chart.render();
     },
     generateRandomData() {
-      const labels = ['03-1', '03-2', '03-3', '03-4', '03-5'];
-      const types = ['患病', '未患病'];
+      const labels = ['CO2浓度', '湿度', '氮', '磷', '钾'];
+      const types = ['空气及土壤元素含量比例数据'];
 
       return labels.map(label => {
-        return types.map(type => ({
-          label,
-          type,
-          value: Math.random()  ,
-        }));
+        if (label === 'CO2浓度') {
+          // CO2 浓度保持在 0.1 以下变动
+          return types.map(type => ({
+            label,
+            type,
+            value: Math.random() * 0.1,
+          }));
+        } else if (label === '湿度') {
+          // CO2 浓度保持在 0.1 以下变动
+          return types.map(type => ({
+            label,
+            type,
+            value: Math.random(),
+          }));
+        } else {
+          // 其他数据随机生成
+          return types.map(type => ({
+            label,
+            type,
+            value: Math.random() * 0.5,
+          }));
+        }
       }).flat();
     },
     startRandomJump() {
       setInterval(() => {
         this.data = this.generateRandomData();
         this.chart.changeData(this.data);
-      }, 2000); // 调整更新的间隔
+      }, 10000); // 调整更新的间隔
     },
   },
 };

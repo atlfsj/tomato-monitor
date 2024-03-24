@@ -156,7 +156,7 @@
           </Box>
         </div>
         <div class="content_tow_2 chart_box">
-          <Box title="患病比例">
+          <Box title="环境数据实时检测">
             <template v-slot:content>
               <Bottom2 />
             </template>
@@ -182,13 +182,13 @@
       <!-- /第二行 -->
     </div>
 
-    <!-- 病虫害识别 -->
+    <!-- 病虫害识别
     <template v-if="showFind">
       <h1>show了看看我</h1>
       <iframe>
         <find />
       </iframe>
-    </template>
+    </template> -->
 
   </div>
 </template>

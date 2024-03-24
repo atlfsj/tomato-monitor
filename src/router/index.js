@@ -24,12 +24,6 @@ const routes = [
         component: () => import('../pages/m3/Find.vue')
 
     },
-    {
-        path: '/show',
-        name: 'Show',
-        component: () => import('../pages/m3/Show.vue')
-    }
-
 ]
 
 const router = createRouter({
