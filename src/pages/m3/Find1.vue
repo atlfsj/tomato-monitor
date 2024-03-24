@@ -1,137 +1,89 @@
 <template>
-  <div class="find">
-    <div v-if="!fileList.length" class="full-width">
-      <a-upload-dragger :file-list="fileList" :custom-request="customRequest" :before-upload="beforeUpload"
-        :show-upload-list="false" class="full-height">
-        <!-- 如果文件列表为空，显示拖拽上传区域 -->
-        <div class="upload-container">
-          <!-- 拖拽上传区域的图标 -->
-          <p class="ant-upload-drag-icon">
-            <a-icon type="inbox" />
-          </p>
-          <!-- 拖拽上传区域的提示文本 -->
-          <p class="ant-upload-text">点击或拖拽上传图片</p>
-        </div>
-      </a-upload-dragger>
+  <div>
+    <!-- 使用 antd Upload 组件来实现文件上传，并预览图片 -->
+    <a-upload :before-upload="handleBeforeUpload" :show-upload-list="false">
+      <a-button>点击上传图片</a-button>
+    </a-upload>
+
+    <!-- 展示上传的图片预览 -->
+    <div v-if="previewUrl" class="half-width">
+      <img :src="previewUrl" alt="Preview" class="uploaded-image" />
     </div>
 
-    <div v-else class="half-width">
-      <!-- 如果文件列表不为空，显示已上传的图片 -->
-      <img class="uploaded-image" :src="fileList[0].url" alt="Uploaded" @click="getResultGroups" />
-      <!-- 识别结果展示区域 -->
-      <div class="result-show">
-        <div v-for="(group, groupIndex) in resultGroups" :key="groupIndex">
-          <div v-for="(result, resultIndex) in group" :key="resultIndex">
-            <a-input :addon-before="result.label" v-model:value="result.value" />
-          </div>
-        </div>
-      </div>
+    <!-- 展示上传结果 -->
+    <div class="result" v-if="uploadResult">
+      <p>种类: {{ uploadResult.class }}</p>
+      <p>概率: {{ uploadResult.probability }}</p>
+      <p>治疗方法：</p>
+      <a-textarea class="textarea" v-model="uploadResult.zhiliao" :autosize="{ minRows: 4, maxRows: 6 }"></a-textarea>
     </div>
   </div>
 </template>
 
 <script>
-import { message } from 'ant-design-vue';
-import axios from 'axios';
+import { ref } from 'vue';
+import { Upload, Button, message, Input } from 'ant-design-vue';
 
 export default {
+  components: {
+    'a-upload': Upload,
+    'a-button': Button,
+    'a-textarea': Input.TextArea,
+  },
   data() {
     return {
-      fileList: [],
-      resultGroups: [] // 确保定义 resultGroups
+      // 上传结果信息
+      uploadResult: null,
+      // 预览图片的 URL
+      previewUrl: null,
     };
   },
-
   methods: {
-    // 在上传前进行文件类型检查
-    beforeUpload(file) {
-      const isImage = file.type.startsWith('image/');
-      // 如果不是图片类型，显示错误提示
-      if (!isImage) {
-        message.error('You can only upload image files!');
-      }
-      // 返回检查结果，允许上传图片则返回 true，否则返回 false
-      return isImage;
-    },
-    // 模拟文件上传过程，并更新文件列表
-    customRequest({ file, onSuccess }) {
-      // 模拟文件上传的延时操作
-      setTimeout(() => {
-        // 上传成功的回调函数
-        onSuccess();
+    // 上传前的处理
+    handleBeforeUpload(file) {
+      // 使用 FileReader 对象预览图片
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
 
-        // 假设服务器返回的数据包含图片地址
-        const imageUrl = URL.createObjectURL(file);
+      // 创建 FormData 对象, 并将图片文件添加到以后端预期的字段名 “file” 中
+      const formData = new FormData();
+      formData.append('file', file);
 
-        // 更新文件列表，添加上传成功的文件信息
-        this.fileList = [{
-          uid: file.uid,
-          name: file.name,
-          status: 'done',
-          url: imageUrl
-        }];
-        console.log(this.fileList[0].url);
-      }, 1000);
-    },
-    getResultGroups() {
-      const blobUrl = this.fileList[0].url;
-      axios.post('http://192.168.139.20:5000', blobUrl)
-        .then(() => {
-          // 如果上传成功，显示上传成功的提示
-          alert('上传成功');
-          console.log(blobUrl); // 输出blobUrl到控制台
-
-          // 在上传成功后再获取结果
-          axios.get('http://192.168.139.20:5000')
-            .then(response => {
-              // 处理获取结果的响应
-              //this.resultGroups = response.data;
-              console.log('请求成功');
-            }).catch(() => {
-              alert('识别失败');
-            });
+      // 发送 POST 请求，将图片文件上传到 Flask 后端
+      fetch('http://192.168.139.20:5000', {
+        method: 'POST',
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            // 获取后端返回的预测结果
+            return response.json();
+          } else {
+            // 如果请求未成功，则打印错误信息
+            console.error('上传图片失败');
+            alert('上传图片失败');
+            this.uploadResult = null;
+          }
         })
-        .catch(() => {
-          // 如果上传失败，显示上传失败的提示
-          alert('上传失败');
+        .then((result) => {
+          this.uploadResult = result;
+          console.log('后端响应:', result); // 打印后端响应
+        })
+        .catch((error) => {
+          console.error('上传图片时出现错误:', error);
         });
     },
   },
 };
 </script>
 
-
 <style scoped>
-.find {
-  background-color: aliceblue;
-  width: 100%;
-  height: 100%;
-}
-
-.full-width {
-  width: 100%;
-}
-
 .half-width {
   display: flex;
   width: 100%;
-}
-
-.full-height {
-  height: 100%;
-}
-
-.upload-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-}
-
-.ant-upload-text {
-  margin-top: 10px;
-  color: #666;
 }
 
 .uploaded-image {
@@ -139,18 +91,12 @@ export default {
   max-height: 100%;
 }
 
-.result-show {
-  max-width: 50%;
-  height: 100%;
-  overflow-y: auto;
-  /* 添加滚动条，以防结果过多溢出 */
+.result {
+  margin-top: 20px;
+  color: red;
 }
 
-.result-show::-webkit-scrollbar {
-  width: 5px;
-}
-
-.result-show::-webkit-scrollbar-thumb {
-  background-color: #ccc;
+.textarea {
+  width: 100%;
 }
 </style>
