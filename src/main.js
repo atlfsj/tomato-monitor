@@ -15,6 +15,8 @@ import router from './router'
 import './style/layout.scss'
 import { createStore } from 'vuex'
 
+
+const app = createApp(App);
 const store = createStore({
     state() {
         return {
@@ -31,4 +33,5 @@ const store = createStore({
     }
 })
 
-createApp(App).use(router).use(store).use(Antd).use(ElementPlus).mount('#app')
+// app.config.globalProperties.eventBus = app;
+app.use(router).use(store).use(Antd).use(ElementPlus).mount('#app')

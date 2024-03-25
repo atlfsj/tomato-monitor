@@ -1,10 +1,3 @@
-<!--
- * @Description:
- * @Author: charles
- * @Date: 2021-05-05 22:02:56
- * @LastEditors: 高鸿宇 10395429+gao-hong-yu@user.noreply.gitee.com
- * @LastEditTime: 2023-01-24 08:39:23
--->
 <template>
   <div class="tieshi" v-text="texts[flag]"></div>
   <br>
@@ -16,16 +9,17 @@
     <a-button type="primary" @click="showModal">点击识别番茄病虫害</a-button>
     <a-modal v-model:visible="visible" width="900px" title="病虫害识别系统" @ok="handleOk">
       <ifram class="identify">
-        <Find />
+        <Find :previewUrl="previewUrl" @update:previewUrl="updatePreviewUrl"
+          @update:uploadResult="updateUploadResult" />
       </ifram>
     </a-modal>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue';
 import 'ant-design-vue/dist/antd.css'
 import Find from '../../m3/Find'
+
 export default {
   components: {
     Find
@@ -38,11 +32,12 @@ export default {
         "2、对种子进行药剂拌种，选择能防真菌与卵菌病害的药剂，比如说恶霉灵、多菌灵、甲霜灵、代森锰锌。"
         , "3.为预防青枯病，可以推广高畦种植，保证排灌方便，生长期间多施加腐熟有机肥，提高植株抗病能力。发病初期浇灌噻菌铜悬浮剂等，在发病前也可以使用枯草芽孢杆菌可湿性粉剂进行灌根。"
         , "4.西红柿应开沟起垄栽培，合理密植，及时发现病株，及时喷洒醚菌酯悬浮剂，氢氧化铜可湿性粉剂等进行药剂防治晚疫病。"],
-      visible: false
+      visible: false,
+      previewUrl: null, // 添加 previewUrl 数据
     }
   },
   mounted() {
-    setInterval(this.changeflag, 7000)
+    setInterval(this.changeflag, 7000);
   },
   methods: {
     changeflag() {
@@ -55,6 +50,16 @@ export default {
     handleOk(e) {
       console.log(e);
       this.visible = false;
+      this.previewUrl = null; // 清除预览图片 URL
+      this.uploadResult = null; // 清除图片识别结果
+    },
+    // 更新预览图片 URL 的方法
+    updatePreviewUrl(newPreviewUrl) {
+      this.previewUrl = newPreviewUrl;
+    },
+    // 更新上传图片的识别结果
+    updateUploadResult(newUploadResult) {
+      this.uploadResult = newUploadResult;
     }
   },
 }

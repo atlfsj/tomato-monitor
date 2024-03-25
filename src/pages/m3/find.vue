@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 使用 antd Upload 组件来实现文件上传，并预览图片 -->
-        <div v-if="uploadButton">
+        <div v-if="!previewUrl">
             <a-upload :before-upload="handleBeforeUpload" :show-upload-list="false">
                 <a-button>点击上传图片</a-button>
             </a-upload>
@@ -24,8 +24,7 @@
 </template>
 
 <script>
-import { ref } from 'vue';
-import { Upload, Button, message, Input } from 'ant-design-vue';
+import { Upload, Button, Input } from 'ant-design-vue';
 
 export default {
     components: {
@@ -33,14 +32,18 @@ export default {
         'a-button': Button,
         'a-textarea': Input.TextArea,
     },
+
     data() {
         return {
             // 上传结果信息
-            uploadResult: null,
-            // 预览图片的 URL
-            previewUrl: null,
-            uploadButton: true
+            // uploadResult: null,
+            // previewUrl: null,
+            uploadButton: true,
         };
+    },
+    props: {
+        previewUrl: String,
+        uploadResult: Object
     },
     methods: {
         // 上传前的处理
@@ -49,7 +52,7 @@ export default {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onload = () => {
-                this.previewUrl = reader.result;
+                this.$emit('update:previewUrl', reader.result); // 发送预览图片的事件
             };
 
             // 创建 FormData 对象, 并将图片文件添加到以后端预期的字段名 “file” 中
@@ -73,13 +76,14 @@ export default {
                     }
                 })
                 .then((result) => {
-                    this.uploadResult = result;
+                    this.$emit('update:uploadResult', result);
                     console.log('后端响应:', result); // 打印后端响应
                 })
                 .catch((error) => {
                     console.error('上传图片时出现错误:', error);
                 });
-            this.uploadButton = !this.uploadButton
+            // 上传后隐藏按钮
+            this.uploadButton = !this.uploadButton;
         },
 
     },
