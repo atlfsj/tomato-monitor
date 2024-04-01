@@ -3,13 +3,14 @@
   <br>
   <div class="button">
     <a href="http://localhost:8081/" target="self_black">
-      <button>点击进入知识图谱的番茄病虫害辅助识别与诊断专家系统</button>
+      <button>点击进入知识图谱番茄病虫害识别与诊断专家系统</button>
     </a>
     <!-- 病虫害识别功能 -->
     <a-button type="primary" @click="showModal">点击识别番茄病虫害</a-button>
     <a-modal v-model:visible="visible" width="900px" title="病虫害识别系统" @ok="handleOk">
       <ifram class="identify">
-        <Find :previewUrl="previewUrl" @update:previewUrl="updatePreviewUrl" />
+        <Find :previewUrl="previewUrl" :uploadResult="uploadResult" @update:previewUrl="updatePreviewUrl"
+          @update:uploadResult="updateUploadResult" />
       </ifram>
     </a-modal>
   </div>
@@ -27,13 +28,13 @@ export default {
     return {
       flag: 0,
       texts: ["1、在播种之前，先将种子放在55度温水里浸泡十五分钟，这样能起到防治病菌的作用。\n" +
-        "\n" +
+        "\n",
         "2、对种子进行药剂拌种，选择能防真菌与卵菌病害的药剂，比如说恶霉灵、多菌灵、甲霜灵、代森锰锌。"
-        , "3.为预防青枯病，可以推广高畦种植，保证排灌方便，生长期间多施加腐熟有机肥，提高植株抗病能力。发病初期浇灌噻菌铜悬浮剂等，在发病前也可以使用枯草芽孢杆菌可湿性粉剂进行灌根。"
+        , "3.为预防青枯病，可以推广高畦种植，生长期间多施加腐熟有机肥。发病初期浇灌噻菌铜悬浮剂等，在发病前也可以使用枯草芽孢杆菌可湿性粉剂进行灌根。"
         , "4.西红柿应开沟起垄栽培，合理密植，及时发现病株，及时喷洒醚菌酯悬浮剂，氢氧化铜可湿性粉剂等进行药剂防治晚疫病。"],
       visible: false,
       previewUrl: null, // 添加 previewUrl 数据
-      //uploadResult: null,
+      uploadResult: null,
     }
   },
   mounted() {

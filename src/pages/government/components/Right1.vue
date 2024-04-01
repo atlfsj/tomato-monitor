@@ -135,12 +135,12 @@ export default {
     generateRandomData() {
       const labels = ['周日', '周一', '周二', '周三', '周四', '周五', '周六',];
       const types = ['毛毛虫', '臭虫'];
-      
+
       return labels.map(label => {
         return types.map(type => ({
           label,
           type,
-          value: Math.floor(Math.random() * 30) +1,
+          value: Math.floor(Math.random() * 30) + 1,
         }));
       }).flat();
     },

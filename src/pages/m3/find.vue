@@ -18,10 +18,10 @@
                 <p>种类: {{ uploadResult.class }}</p>
                 <p>概率: {{ uploadResult.probability }}</p>
                 <p>治疗方法：{{ uploadResult.zhiliao }}</p>
-                
+
             </div>
         </div>
-        
+
     </div>
 </template>
 
@@ -38,14 +38,14 @@ export default {
     data() {
         return {
             // 上传结果信息
-            uploadResult: null,
+            //uploadResult: null,
             // previewUrl: null,
             uploadButton: true,
         };
     },
     props: {
         previewUrl: String,
-        //uploadResult: Object
+        uploadResult: Object
     },
     methods: {
         // 上传前的处理
@@ -62,7 +62,7 @@ export default {
             formData.append('url', file);
 
             // 发送 POST 请求，将图片文件上传到 Flask 后端
-            fetch('http://192.168.185.20:5000', {
+            fetch('http://192.168.1.101:5000', {
                 method: 'POST',
                 body: formData,
             })
@@ -78,8 +78,8 @@ export default {
                     }
                 })
                 .then((result) => {
-                    //this.$emit('update:uploadResult', result);
-                    this.uploadResult = result;
+                    this.$emit('update:uploadResult', result);
+                    //this.uploadResult = result;
                     console.log('后端响应:', result); // 打印后端响应
                 })
                 .catch((error) => {
@@ -123,7 +123,8 @@ export default {
     flex-direction: row;
 
 }
-p{
+
+p {
     margin-top: 15px;
     margin-left: 15px
 }

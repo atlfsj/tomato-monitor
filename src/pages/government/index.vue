@@ -171,7 +171,7 @@
           </Box>
         </div>
         <div class="content_tow_4 chart_box">
-          <Box title="监测视频">
+          <Box title="防治小技巧">
             <template v-slot:content>
               <Bottom4 />
 
