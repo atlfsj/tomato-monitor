@@ -1,13 +1,27 @@
 <template>
     <div class="title">番茄病害监测</div>
-    <div class="vedio">
-        <video controls width="700" height="400">
+    <div class="video">
+        <video ref="videoPlayer" controls width="700" height="400">
             <source src="../../../../public/monitor.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-
     </div>
 </template>
+
+<script>
+export default {
+    mounted() {
+        // 获取视频元素
+        const videoElement = this.$refs.videoPlayer;
+        // 设置默认播放速度为0.25
+        videoElement.playbackRate = 0.25;
+        // 设置视频播放起始时间为17秒
+        videoElement.currentTime = 17;
+        // 播放视频
+        videoElement.play();
+    }
+};
+</script>
 
 <style>
 .title {
@@ -16,7 +30,7 @@
     font-size: 12pt;
 }
 
-.vedio {
+.video {
     display: flex;
     justify-content: center;
 }

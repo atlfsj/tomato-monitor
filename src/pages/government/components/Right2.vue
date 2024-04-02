@@ -1,69 +1,106 @@
-<!--
- * @Description:
- * @Author: charles
- * @Date: 2021-05-05 22:02:56
- * @LastEditors: jyq
- * @LastEditTime: 2022-01-10 16:13:55
--->
 <template>
-  <!--  <div ref="right_container" style="height: 95%"></div>-->
-  <div class="scroll">
-
-    <div class="tieshi" style="height:50%">
-      {{ data1 }}
-    </div>
-    <div class="tieshi" style="height:15%">
-      {{ data2 }}
-    </div>
+  <div>
+    <div id="c2" style="width: 100%;"></div>
   </div>
 </template>
+
 <script>
-// import { DualAxes } from "@antv/g2plot";
+import { Chart } from '@antv/g2';
+
 export default {
   data() {
     return {
-      data1: '1）68%金雷水分散粒剂（精甲霜灵·代森锰锌复配剂）和50%锐扑（氟吗·乙铝）可湿性粉剂防治番茄晚疫病速效性好，持效期长，且使用安全。',
-      data2: '2）发病初期，喷氟吗·锰锌、氰霜唑、霜霉威、霜脲氰·代森锰锌、烯酰·锰锌、杀毒矾、乙膦·锰锌、甲霜铜、精甲霜·锰锌、吡唑醚菌酯等。',
-      falg: true,
+      chart: null,
+      data: [], // 初始数据为空数组
+      dataLength: 200, // 控制数据长度
     };
   },
-
-  watch: {},
-
-  created() {
+  mounted() {
+    // 生成初始数据并渲染图表
+    this.initChartData();
+    this.initChart();
+    this.startRandomJump();
   },
   methods: {
-    findDB() {		//这个方法是你要获取后台数据的方法
-      //这里面通过你的axiosUrl获取到一些数据,
-      if (!this.falg) {
-        this.data1 = '1）苯基酰胺类 如苯菌灵是防治卵菌纲病害的较强内吸性杀菌剂，如浙江一帆化工的“霜扑”，对防治葡萄和瓜类霜霉病，苗期猝倒病有很好的效果。';
-        this.data2 = "2）氨基甲酸酯中的霜霉威成份 如普力克霜霉威盐酸盐水剂，被誉为猝倒病和疫病特效药，对霜霉病和烟草黑胫病也有良好的杀灭作用。";
-      } else {
-        this.data1 =
-            '1）68%金雷水分散粒剂（精甲霜灵·代森锰锌复配剂）和50%锐扑（氟吗·乙铝）可湿性粉剂防治番茄晚疫病速效性好，持效期长，且使用安全。';
-        this.data2 =
-            '2）发病初期，喷氟吗·锰锌、氰霜唑、霜霉威、霜脲氰·代森锰锌、烯酰·锰锌、杀毒矾、乙膦·锰锌、甲霜铜、精甲霜·锰锌、吡唑醚菌酯等。';
-      }
+    initChartData() {
+      const now = new Date().getTime();
+      const initialHumidity = Math.floor(Math.random() * 6) + 45; // 初始湿度调整为45%
+
+      // 添加初始数据到数组
+      this.data.push({ time: now, humidity: initialHumidity, type: '湿度' });
     },
-    times() {			//定义了一个times()方法来执行定时查询findDB()
-      return setInterval(() => {			//setInterval换个名字就行了
-        this.findDB()
-        this.falg = !this.falg
-      }, 6000)		//设置时间，这里是1分钟
+    initChart() {
+      this.chart = new Chart({
+        container: 'c2',
+        autoFit: true, // 自适应容器宽度
+        height: 170,
+      });
+
+      // 创建空数据源和列信息
+      this.chart.data(this.data);
+      this.chart.scale({
+        time: {
+          alias: '时间',
+          type: 'time',
+          mask: 'MM:ss',
+          tickCount: 10,
+          nice: false,
+        },
+        humidity: {
+          alias: '湿度(%)',
+          min: 20,
+          max: 80,
+          nice: false,
+        },
+        type: {
+          type: 'cat',
+        },
+      });
+
+      // 创建折线图
+      this.chart.line().position('time*humidity').color('type', '#007acc').shape('smooth').size(2);
+
+      // 添加湿度数值类型标记
+      this.chart.annotation().text({
+        position: ['min', 'min'],
+        content: '湿度',
+        offsetY: -5,
+        style: {
+          textAlign: 'start',
+          fontSize: 12,
+        },
+        offsetX: 5,
+      });
+
+      // 渲染图表
+      this.chart.render();
+    },
+    startRandomJump() {
+      setInterval(() => {
+        const now = new Date().getTime();
+        // 生成在45%-50%之间的随机湿度
+        const humidityChange = Math.random() > 0.5 ? -1 : 1; // 随机增加或减少湿度
+        let humidity = this.data[this.data.length - 1].humidity + humidityChange / 10; // 减小变化幅度
+
+        // 限制湿度在20%-80%之间
+        humidity = Math.max(20, Math.min(80, humidity));
+
+        // 移除旧数据点
+        if (this.data.length >= this.dataLength) {
+          this.data.shift();
+        }
+
+        // 更新数据
+        this.data.push({ time: now, humidity, type: '湿度' });
+
+        // 更新图表数据
+        this.chart.changeData(this.data);
+      }, 5000); // 调整更新的间隔
     },
   },
-  mounted() {		//模板渲染之后调用的，模板渲染之前是created
-    //刚进页面就能获取到findDB()中的数据
-    this.times()	//加载定时任务
-  }
-}
+};
 </script>
+
 <style scoped>
-
-
-.tieshi {
-  text-indent: 1em;
-  color: #ebf357;
-  font-family: 雅痞-简;
-}
+/* Add your component-specific styles here */
 </style>
