@@ -1,4 +1,5 @@
 module.exports = {
+    assetsDir: 'assets',
     publicPath: '/tomato-monitor/dist/',
     devServer: {
         proxy: {
