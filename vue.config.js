@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/tomato-monitor/',
+    publicPath: '/',
     devServer: {
         proxy: {
             '/result': {

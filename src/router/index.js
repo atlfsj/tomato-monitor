@@ -1,11 +1,3 @@
-/*
- * @Description:
- * @Author: 高鸿宇
- * @Date: 2021-05-05 16:37:55
- * @LastEditors: 高鸿宇 10395429+gao-hong-yu@user.noreply.gitee.com
- * @LastEditTime: 2023-01-23 08:49:32
- * 
- */
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes = [
