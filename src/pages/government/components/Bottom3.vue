@@ -2,7 +2,7 @@
   <div class="tieshi" v-text="texts[flag]"></div>
   <br>
   <div class="button">
-    <a href="http://localhost:8081/" target="self_black">
+    <a href="https://atlfsj.github.io/tomato-knowledgeGraph/#/" target="self_black">
       <button>点击进入知识图谱番茄病虫害识别与诊断专家系统</button>
     </a>
     <!-- 病虫害识别功能 -->

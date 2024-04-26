@@ -62,7 +62,7 @@ export default {
             formData.append('url', file);
 
             // 发送 POST 请求，将图片文件上传到 Flask 后端
-            fetch('http://192.168.1.101:5000', {
+            fetch('http://192.168.1.102:5000', {
                 method: 'POST',
                 body: formData,
             })
