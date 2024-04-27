@@ -75,7 +75,7 @@ export default {
     },
     getResultGroups() {
       const blobUrl = this.fileList[0].url;
-      axios.post('http://192.168.139.20:5000', blobUrl)
+      axios.post('http://10.0.8.14:5000', blobUrl)
         .then(() => {
           // 如果上传成功，显示上传成功的提示
           alert('上传成功');
