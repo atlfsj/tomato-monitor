@@ -1,7 +1,9 @@
 <template>
   <div class="tieshi" v-text="texts[flag]"></div>
-  <br>
   <div class="button">
+    <a href="https://atlfsj.github.io/cesium-screen/#/" target="self_black">
+      <button>cesium大屏监测系统</button>
+    </a>
     <a href="https://atlfsj.github.io/tomato-knowledgeGraph/#/" target="self_black">
       <button>点击进入知识图谱番茄病虫害识别与诊断专家系统</button>
     </a>
