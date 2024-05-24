@@ -1,14 +1,70 @@
-<!--
- * @Description:
- * @Author: charles
- * @Date: 2021-05-05 22:02:56
- * @LastEditors: charles
- * @LastEditTime: 2021-07-14 15:18:48
--->
 <template>
-  <div style="width: 90%;margin: 0 auto;margin-top: 10px">
-
-    <iframe src="//player.bilibili.com/player.html?aid=679480180&bvid=BV1CS4y1g7jo&cid=700448122&page=1" scrolling="no"
-            border="0" frameborder="no" framespacing="0" allowfullscreen="true"></iframe>
+  <div class="video-container">
+    <video ref="videoPlayer" width="300" height="160" autoplay muted @timeupdate="updateProgress">
+      <source src="../../../../public/fangzhi.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+    <div class="progress-bar" @click="seek">
+      <div class="progress" :style="{ width: progress + '%' }"></div>
+    </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      progress: 0
+    };
+  },
+  mounted() {
+    // 获取视频元素
+    const videoElement = this.$refs.videoPlayer;
+
+    // 设置视频播放起始时间为17秒
+    videoElement.currentTime = 17;
+    // 播放视频
+    videoElement.play();
+  },
+  methods: {
+    updateProgress() {
+      const videoElement = this.$refs.videoPlayer;
+      this.progress = (videoElement.currentTime / videoElement.duration) * 100;
+    },
+    seek(event) {
+      const videoElement = this.$refs.videoPlayer;
+      const progressBar = event.currentTarget;
+      const clickX = event.offsetX;
+      const progressBarWidth = progressBar.offsetWidth;
+      const newTime = (clickX / progressBarWidth) * videoElement.duration;
+      videoElement.currentTime = newTime;
+    }
+  }
+};
+</script>
+
+<style>
+.video-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.progress-bar {
+  width: 300px;
+  height: 10px;
+  background-color: #ddd;
+  cursor: pointer;
+  margin-top: 10px;
+  position: relative;
+}
+
+.progress {
+  height: 100%;
+  background-color: #76c7c0;
+  width: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
     <div class="title">番茄病害监测</div>
     <div class="video">
-        <video ref="videoPlayer" controls width="700" height="400">
+        <video ref="videoPlayer" width="700" height="400" autoplay muted>
             <source src="../../../../public/monitor.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
@@ -33,5 +33,17 @@ export default {
 .video {
     display: flex;
     justify-content: center;
+}
+
+video::-webkit-media-controls {
+    display: none !important;
+}
+
+video::-webkit-media-controls-enclosure {
+    display: none !important;
+}
+
+video::-webkit-media-controls-panel {
+    display: none !important;
 }
 </style>
